@@ -11,27 +11,27 @@ datasource db {
 }
 
 model Restaurant {
-  id            String    @id @default(uuid())
-  name          String    @db.VarChar(255)
-  address       String    @db.VarChar(255)
-  businessHours String    @db.VarChar(255)
-  photo         Bytes[]
-  Products      Products? @relation(fields: [productsId], references: [id], onDelete: Cascade)
-  productsId    String?
+  id            String @id @default(uuid())
+  name          String @db.VarChar(255)
+  address       String @db.VarChar(255)
+  businessHours String @db.VarChar(255)
+  photo         String
+
+  products Products[]
 
   @@map("restaurant")
 }
 
 model Products {
-  id                    String  @id @default(uuid())
-  name                  String  @db.VarChar(255)
+  id                    String      @id @default(uuid())
+  name                  String      @db.VarChar(255)
   price                 Float
-  photo                 Bytes[]
-  category_products     String  @db.VarChar(255)
+  photo                 String
+  category_products     String      @db.VarChar(255)
   promotion             Boolean
-  description_promotion String  @db.VarChar(255)
-
-  restaurant Restaurant[]
+  description_promotion String      @db.VarChar(255)
+  Restaurant            Restaurant? @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  restaurantId          String?
 
   @@map("products")
 }
