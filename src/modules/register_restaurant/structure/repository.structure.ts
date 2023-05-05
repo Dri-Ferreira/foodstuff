@@ -1,3 +1,5 @@
+import { createRestaurantParams } from '../types/register_params';
+
 export interface IRestaurantRepository {
-  register(params: any): Promise<any>;
+  register(params: createRestaurantParams): Promise<any>;
 }

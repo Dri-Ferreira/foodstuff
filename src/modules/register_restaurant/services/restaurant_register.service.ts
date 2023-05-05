@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ICreateRestaurantService } from '../structure/service.structure';
 import { RestaurantRepository } from '../repository/restaurant.repositoy';
 import { IRestaurantRepository } from '../structure/repository.structure';
+import { createRestaurantParams } from '../types/register_params';
 
 @Injectable()
 export class Restaurant_register implements ICreateRestaurantService {
@@ -9,7 +10,8 @@ export class Restaurant_register implements ICreateRestaurantService {
     @Inject(RestaurantRepository)
     private readonly restaurantRepository: IRestaurantRepository,
   ) {}
-  execute(params: any): Promise<any> {
-    throw new Error('Method not implemented.');
+  async execute(params: createRestaurantParams): Promise<any> {
+    const new_restaurant = await this.restaurantRepository.register(params);
+    return new_restaurant;
   }
 }
