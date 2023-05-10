@@ -5,3 +5,7 @@ export type createRestaurantParams = {
   businessHours: string;
   productsId?: string;
 };
+
+export type getIdRestaurantParams = {
+  id: string;
+};
