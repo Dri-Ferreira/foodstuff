@@ -1,10 +1,20 @@
-import { Body, Controller, Get, Inject, Post, Param } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Inject,
+  Post,
+  Param,
+  Patch,
+} from '@nestjs/common';
 import { Restaurant_register } from './services/restaurant_register.service';
 import { RegisterRestaurantDto } from './Dto/register.dto';
 import { Restaurant_getAll } from './services/get_restaurant_all.service';
 import { Restaurant } from '@prisma/client';
 import { Restaurant_getId } from './services/get_restaurant_id.service';
 import { getIdRestaurantParams } from './types/register_params';
+import { Update_restaurant } from './services/update_restaurant.service';
+import { UpdateRestauratDto } from './Dto/update-restaurat.dto';
 
 @Controller('register-restaurant')
 export class RegisterRestaurantController {
@@ -15,6 +25,8 @@ export class RegisterRestaurantController {
     private readonly restaurant_getAll: Restaurant_getAll,
     @Inject(Restaurant_getId)
     private readonly restaurant_getId: Restaurant_getId,
+    @Inject(Update_restaurant)
+    private readonly restauran_update: Update_restaurant,
   ) {}
 
   @Post('create')
@@ -30,5 +42,13 @@ export class RegisterRestaurantController {
   @Get('searchId/:id')
   searchId(@Param() id: getIdRestaurantParams): Promise<Restaurant> {
     return this.restaurant_getId.execute(id);
+  }
+
+  @Patch('updateRestaurant/:id')
+  updateRestaurant(
+    @Param('id') id: string,
+    @Body() updateRestaurant: UpdateRestauratDto,
+  ): Promise<Restaurant> {
+    return this.restauran_update.updateRestaurant(id, updateRestaurant);
   }
 }

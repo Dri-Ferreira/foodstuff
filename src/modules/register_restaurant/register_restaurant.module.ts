@@ -5,6 +5,7 @@ import { RestaurantRepository } from './repository/restaurant.repositoy';
 import { PrismaService } from 'src/database/clientPrisma';
 import { Restaurant_getAll } from './services/get_restaurant_all.service';
 import { Restaurant_getId } from './services/get_restaurant_id.service';
+import { Update_restaurant } from './services/update_restaurant.service';
 
 @Module({
   controllers: [RegisterRestaurantController],
@@ -12,6 +13,7 @@ import { Restaurant_getId } from './services/get_restaurant_id.service';
     Restaurant_register,
     Restaurant_getAll,
     Restaurant_getId,
+    Update_restaurant,
     RestaurantRepository,
     PrismaService,
   ],

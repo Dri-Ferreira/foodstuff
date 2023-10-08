@@ -6,10 +6,22 @@ import {
   getIdRestaurantParams,
 } from '../types/register_params';
 import { Restaurant } from '@prisma/client';
+import { UpdateRestauratDto } from '../Dto/update-restaurat.dto';
 
 @Injectable()
 export class RestaurantRepository implements IRestaurantRepository {
   constructor(private readonly prisma: PrismaService) {}
+  updateRestaurant(
+    id: string,
+    updateRestaurantDto: UpdateRestauratDto,
+  ): Promise<Restaurant> {
+    return this.prisma.restaurant.update({
+      where: { id },
+      data: {
+        ...updateRestaurantDto,
+      },
+    });
+  }
   searchAll_restaurant(): Promise<Restaurant[]> {
     return this.prisma.restaurant.findMany();
   }
