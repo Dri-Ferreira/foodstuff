@@ -6,6 +6,7 @@ import {
 import { UpdateRestauratDto } from '../Dto/update-restaurat.dto';
 
 export interface IRestaurantRepository {
+  existRestaurant(where: Partial<Restaurant> | null): Promise<Restaurant>;
   register(params: createRestaurantParams): Promise<Restaurant>;
   searchAll_restaurant(): Promise<Restaurant[]>;
   searchById(params: getIdRestaurantParams): Promise<Restaurant>;

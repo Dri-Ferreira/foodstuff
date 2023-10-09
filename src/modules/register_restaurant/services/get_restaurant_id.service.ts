@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { IGetIdRestaurant } from '../structure/service.structure';
 import { RestaurantRepository } from '../repository/restaurant.repositoy';
 import { IRestaurantRepository } from '../structure/repository.structure';
@@ -12,6 +12,11 @@ export class Restaurant_getId implements IGetIdRestaurant {
     private readonly restaurantRepository: IRestaurantRepository,
   ) {}
   async execute(params: getIdRestaurantParams): Promise<Restaurant> {
+    const existRestaurant = await this.restaurantRepository.existRestaurant({
+      id: params.id,
+    });
+    if (!existRestaurant)
+      throw new BadRequestException('There is no registered restaurant');
     return await this.restaurantRepository.searchById({ id: params.id });
   }
 }
