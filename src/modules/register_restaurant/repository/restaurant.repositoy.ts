@@ -11,6 +11,13 @@ import { UpdateRestauratDto } from '../Dto/update-restaurat.dto';
 @Injectable()
 export class RestaurantRepository implements IRestaurantRepository {
   constructor(private readonly prisma: PrismaService) {}
+
+  existRestaurant(where: Partial<Restaurant>): Promise<Restaurant> {
+    return this.prisma.restaurant.findUnique({
+      where,
+    });
+  }
+
   updateRestaurant(
     id: string,
     updateRestaurantDto: UpdateRestauratDto,
@@ -22,6 +29,7 @@ export class RestaurantRepository implements IRestaurantRepository {
       },
     });
   }
+
   searchAll_restaurant(): Promise<Restaurant[]> {
     return this.prisma.restaurant.findMany();
   }
@@ -30,6 +38,7 @@ export class RestaurantRepository implements IRestaurantRepository {
       data: { ...params },
     });
   }
+
   searchById(params: getIdRestaurantParams): Promise<Restaurant> {
     return this.prisma.restaurant.findFirst({
       where: { id: params.id },

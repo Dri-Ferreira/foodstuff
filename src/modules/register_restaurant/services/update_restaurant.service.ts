@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { IUpdateRestaurant } from '../structure/service.structure';
 import { IRestaurantRepository } from '../structure/repository.structure';
 import { RestaurantRepository } from '../repository/restaurant.repositoy';
@@ -15,6 +15,11 @@ export class Update_restaurant implements IUpdateRestaurant {
     id: string,
     updateRestarantDto: UpdateRestauratDto,
   ): Promise<Restaurant> {
+    const existRestaurant = await this.restaurantRepository.existRestaurant({
+      id,
+    });
+    if (!existRestaurant)
+      throw new BadRequestException('There is no registered restaurant ');
     const restaurant = await this.restaurantRepository.updateRestaurant(
       id,
       updateRestarantDto,
